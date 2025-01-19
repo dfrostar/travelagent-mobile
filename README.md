@@ -1,50 +1,107 @@
+# Travel Agent Mobile App
 
-# TypeScript
+A comprehensive travel booking and management application with integrated TRAVL token features.
 
-[![GitHub Actions CI](https://github.com/microsoft/TypeScript/workflows/CI/badge.svg)](https://github.com/microsoft/TypeScript/actions?query=workflow%3ACI)
-[![npm version](https://badge.fury.io/js/typescript.svg)](https://www.npmjs.com/package/typescript)
-[![Downloads](https://img.shields.io/npm/dm/typescript.svg)](https://www.npmjs.com/package/typescript)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/microsoft/TypeScript/badge)](https://securityscorecards.dev/viewer/?uri=github.com/microsoft/TypeScript)
+## Features
 
+### Travel Management
+- Book flights, hotels, and activities
+- View and manage bookings
+- Real-time travel updates
+- Itinerary planning
+- Travel recommendations
 
-[TypeScript](https://www.typescriptlang.org/) is a language for application-scale JavaScript. TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS. TypeScript compiles to readable, standards-based JavaScript. Try it out at the [playground](https://www.typescriptlang.org/play/), and stay up to date via [our blog](https://blogs.msdn.microsoft.com/typescript) and [Twitter account](https://twitter.com/typescript).
+### Token Management
+- View TRAVL token balance and metrics
+- Stake tokens for rewards
+- Swap tokens with other cryptocurrencies
+- Track token activities
+- Claim booking and staking rewards
+- View token distribution and vesting
 
-Find others who are using TypeScript at [our community page](https://www.typescriptlang.org/community/).
+## Getting Started
 
-## Installing
+### Prerequisites
+- Node.js 18+
+- Yarn or npm
+- React Native development environment
+- iOS/Android development tools
 
-For the latest stable version:
-
+### Installation
 ```bash
-npm install -D typescript
+# Clone the repository
+git clone https://github.com/yourusername/travelagent.git
+
+# Install dependencies
+cd travelagent_mobile
+yarn install
+
+# Install pods for iOS
+cd ios && pod install && cd ..
+
+# Set up environment variables
+cp .env.example .env
 ```
 
-For our nightly builds:
-
-```bash
-npm install -D typescript@next
+### Environment Variables
+```
+TRAVL_TOKEN_ADDRESS=
+UNISWAP_ROUTER_ADDRESS=
+WETH_ADDRESS=
+USDC_ADDRESS=
+DAI_ADDRESS=
+USDT_ADDRESS=
 ```
 
-## Contribute
+### Running the App
+```bash
+# Start Metro bundler
+yarn start
 
-There are many ways to [contribute](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md) to TypeScript.
-* [Submit bugs](https://github.com/microsoft/TypeScript/issues) and help us verify fixes as they are checked in.
-* Review the [source code changes](https://github.com/microsoft/TypeScript/pulls).
-* Engage with other TypeScript users and developers on [StackOverflow](https://stackoverflow.com/questions/tagged/typescript).
-* Help each other in the [TypeScript Community Discord](https://discord.gg/typescript).
-* Join the [#typescript](https://twitter.com/search?q=%23TypeScript) discussion on Twitter.
-* [Contribute bug fixes](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md).
+# Run on iOS
+yarn ios
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see
-the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com)
-with any additional questions or comments.
+# Run on Android
+yarn android
+```
 
-## Documentation
+## Testing
+```bash
+# Run unit tests
+yarn test
 
-*  [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-*  [Programming handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-*  [Homepage](https://www.typescriptlang.org/)
+# Run E2E tests
+yarn e2e:build
+yarn e2e:test
+```
 
-## Roadmap
+## Architecture
 
-For details on our planned features and future direction, please refer to our [roadmap](https://github.com/microsoft/TypeScript/wiki/Roadmap).
+### Token Management System
+- `TokenDashboardScreen`: Main token interface
+- `TokenStakingScreen`: Staking interface
+- `TokenSwapScreen`: Token swap interface
+- `TokenActivityScreen`: Activity history
+- `TokenMetricsScreen`: Token metrics and charts
+- `TokenRewardsScreen`: Rewards management
+
+### Components
+- `TokenMetricsCard`: Display token statistics
+- `TokenInput`: Amount input with validation
+- `RewardCard`: Display reward information
+- `TokenDistributionChart`: Token allocation visualization
+- `SwapRoute`: Display swap routing
+- `PriceImpact`: Show trade impact
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## Security
+See [SECURITY.md](./SECURITY.md) for security policies and procedures.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
