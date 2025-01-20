@@ -1,0 +1,72 @@
+name: Project Automation
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, closed]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, closed, reopened]
+
+jobs:
+  project_automation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/dfrostar/projects/1
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          
+      - name: Move PR to In Review
+        if: github.event_name == 'pull_request' && github.event.action == 'ready_for_review'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          script: |
+            const query = `query($owner:String!, $repo:String!, $pr_number:Int!) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number:$pr_number) {
+                  projectItems(first:1) {
+                    nodes {
+                      id
+                    }
+                  }
+                }
+              }
+            }`;
+            
+            const variables = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pr_number: context.issue.number
+            };
+            
+            const result = await github.graphql(query, variables);
+            const projectItemId = result.repository.pullRequest.projectItems.nodes[0].id;
+            
+            await github.graphql(`
+              mutation {
+                updateProjectV2ItemFieldValue(
+                  input: {
+                    projectId: "PROJECT_ID"
+                    itemId: "${projectItemId}"
+                    fieldId: "STATUS_FIELD_ID"
+                    value: { 
+                      singleSelectOptionId: "IN_REVIEW_OPTION_ID"
+                    }
+                  }
+                ) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `);
+            
+      - name: Move PR to Done
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          script: |
+            // Similar GraphQL mutation to move item to Done column
